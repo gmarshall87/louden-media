@@ -1,0 +1,55 @@
+<!-- Louden "What's on" section. Paste into Home > Page Settings > Advanced > Page Header Code Injection. Reads whats-on.json from this repo. -->
+<style>
+#lwo{max-width:1080px;margin:0 auto;padding:56px 24px 32px;color:#001B42;text-align:center;box-sizing:border-box}
+#lwo h2{margin:0 0 6px;font-size:2.1em;line-height:1.1;color:#001B42;text-transform:uppercase;letter-spacing:.02em}
+#lwo .lwo-sub{margin:0 0 26px;color:#1E5FA0;font-size:1em}
+#lwo .lwo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;text-align:left}
+#lwo .lwo-card{background:#F7F5F0;border-top:5px solid #1E5FA0;border-radius:6px;padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}
+#lwo .lwo-card.cup{border-top-color:#CE2930}
+#lwo .lwo-date{font-size:.78em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#CE2930;margin:0}
+#lwo .lwo-title{font-size:1.2em;font-weight:700;margin:0;line-height:1.25;color:#001B42}
+#lwo .lwo-meta{font-size:.95em;margin:0;line-height:1.45;color:#001B42}
+#lwo .lwo-open{font-size:.95em;margin:0;font-weight:700;color:#1E5FA0}
+#lwo .lwo-note{font-size:.9em;margin:2px 0 0;line-height:1.4;color:#001B42}
+#lwo .lwo-btn{margin-top:auto;display:block;text-align:center;background:#001B42;color:#fff !important;padding:10px 12px;border-radius:4px;font-weight:700;text-decoration:none !important}
+#lwo .lwo-btn:hover{background:#1E5FA0}
+#lwo .lwo-foot{margin:20px 0 0;font-size:.9em;color:#4a5568}
+</style>
+<script>
+(function(){
+  var FEED='https://raw.githubusercontent.com/gmarshall87/louden-media/main/whats-on.json';
+  var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;}
+  function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function nice(s){var p=s.split('-'),d=new Date(+p[0],+p[1]-1,+p[2]);return DAYS[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()];}
+  function build(){
+    var first=document.querySelector('#sections > section, section.page-section');
+    if(!first||document.getElementById('lwo'))return;
+    fetch(FEED+'?t='+Math.floor(Date.now()/300000)).then(function(r){return r.json();}).then(function(data){
+      var t=today(),items=(data.items||[]).filter(function(i){return i.date>=t;}).sort(function(a,b){return a.date<b.date?-1:1;});var top=items.slice(0,4);items.forEach(function(i){if(i.link&&top.indexOf(i)<0){top[top.length-1]=i;}});items=top;
+      if(!items.length)return;
+      var wrap=el('section');wrap.id='lwo';
+      wrap.appendChild(el('h2',null,"What's on at The Louden"));
+      wrap.appendChild(el('p','lwo-sub','Every Rangers game, home and away, plus every Saturday.'));
+      var grid=el('div','lwo-grid');
+      items.forEach(function(i){
+        var c=el('div','lwo-card'+(i.kind==='cup'?' cup':''));
+        c.appendChild(el('p','lwo-date',nice(i.date)));
+        c.appendChild(el('p','lwo-title',i.title));
+        var meta=[i.where];
+        meta.push(i.status==='provisional'||!i.kickoff?'Kick-off TBC':'Kick-off '+i.kickoff);
+        if(i.tv)meta.push(i.tv);
+        c.appendChild(el('p','lwo-meta',meta.filter(Boolean).join(' · ')));
+        if(i.open)c.appendChild(el('p','lwo-open','The Louden open from '+i.open));
+        if(i.note)c.appendChild(el('p','lwo-note',i.note));
+        if(i.link){var a=el('a','lwo-btn',i.linkText||'Book now');a.href=i.link;a.target='_blank';a.rel='noopener';c.appendChild(a);}
+        grid.appendChild(c);
+      });
+      wrap.appendChild(grid);
+      wrap.appendChild(el('p','lwo-foot','Bar, Lounge and Beer Garden. Walk-ins only, 18+.'));
+      first.parentNode.insertBefore(wrap,first.nextSibling);
+    }).catch(function(){});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
+})();
+</script>
