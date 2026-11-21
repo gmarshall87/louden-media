@@ -1,0 +1,83 @@
+{
+  "updated": "2026-11-21T15:15:00Z",
+  "items": [
+    {
+      "date": "2026-11-24",
+      "kind": "home",
+      "title": "Rangers v Aberdeen",
+      "where": "Ibrox",
+      "kickoff": "8pm",
+      "open": "4pm",
+      "tv": "",
+      "note": "",
+      "status": "confirmed",
+      "link": "",
+      "linkText": ""
+    },
+    {
+      "date": "2026-11-28",
+      "kind": "home",
+      "title": "Rangers v Falkirk",
+      "where": "Ibrox",
+      "kickoff": "",
+      "open": "11am",
+      "tv": "",
+      "note": "",
+      "status": "provisional",
+      "link": "",
+      "linkText": ""
+    },
+    {
+      "date": "2026-12-02",
+      "kind": "home",
+      "title": "Rangers v Dundee United",
+      "where": "Ibrox",
+      "kickoff": "7.45pm",
+      "open": "4pm",
+      "tv": "",
+      "note": "",
+      "status": "confirmed",
+      "link": "",
+      "linkText": ""
+    },
+    {
+      "date": "2026-12-07",
+      "kind": "away",
+      "title": "Hibs v Rangers",
+      "where": "Easter Road",
+      "kickoff": "8pm",
+      "open": "4pm",
+      "tv": "Sky Sports Football",
+      "note": "",
+      "status": "confirmed",
+      "link": "",
+      "linkText": ""
+    },
+    {
+      "date": "2026-12-13",
+      "kind": "cup",
+      "title": "Cup Final: Rangers v Hibs",
+      "where": "Hampden",
+      "kickoff": "3pm",
+      "open": "11am",
+      "tv": "Premier Sports",
+      "note": "The Louden bus to Hampden, £9.50 return. Be here for 1pm.",
+      "status": "confirmed",
+      "link": "https://square.link/u/gN02cuXs",
+      "linkText": "Book the bus"
+    },
+    {
+      "date": "2026-12-20",
+      "kind": "home",
+      "title": "Rangers v Hearts",
+      "where": "Ibrox",
+      "kickoff": "2.30pm",
+      "open": "11am",
+      "tv": "",
+      "note": "",
+      "status": "confirmed",
+      "link": "",
+      "linkText": ""
+    }
+  ]
+}
